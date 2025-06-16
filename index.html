@@ -1,0 +1,1258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thinklet - Smart Learning Platform</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary: #3a6ad6;
+            --primary-light: #e6f0ff;
+            --secondary: #4a90e2;
+            --dark: #333333;
+            --light: #ffffff;
+            --gray: #f5f7fa;
+            --text-light: #666;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--gray);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 10px 20px;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: var(--light);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-primary:hover {
+            background-color: #2d5ab3;
+            transform: translateY(-2px);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--primary-light);
+        }
+
+        .btn-small {
+            padding: 6px 12px;
+            font-size: 0.9rem;
+        }
+
+        /* Navigation */
+        header {
+            background-color: var(--light);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            gap: 10px;
+        }
+
+        .logo-icon {
+            font-size: 1.8rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            display: flex;
+            align-items: center;
+            padding: 4rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+            gap: 3rem;
+        }
+
+        .hero-content {
+            flex: 1;
+        }
+
+        .hero-content h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .hero-content p {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            margin-bottom: 2rem;
+            max-width: 500px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .hero-image {
+            flex: 1;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+        }
+
+        .hero-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Section Styles */
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 0 5%;
+        }
+
+        .section-header h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .section-header p {
+            color: var(--text-light);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Tutor Match Section */
+        .tutor-match {
+            padding: 4rem 0;
+            background-color: var(--light);
+        }
+
+        .tutor-filters {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            padding: 0 5%;
+        }
+
+        .filter {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .filter label {
+            font-weight: 600;
+        }
+
+        .filter select {
+            padding: 0.5rem 1rem;
+            border-radius: var(--border-radius);
+            border: 1px solid #ddd;
+        }
+
+        .budget-range {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            width: 250px;
+        }
+
+        .budget-range input[type="range"] {
+            flex: 1;
+        }
+
+        .tutor-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 0 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .tutor-card {
+            background-color: var(--light);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            transition: transform 0.3s ease;
+        }
+
+        .tutor-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .tutor-img {
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .tutor-info {
+            padding: 1.5rem;
+        }
+
+        .tutor-info h3 {
+            margin-bottom: 0.5rem;
+        }
+
+        .tutor-rating {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+            color: #ffc107;
+        }
+
+        .tutor-bio {
+            color: var(--text-light);
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .tutor-pricing {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .price {
+            font-weight: 600;
+            font-size: 1.2rem;
+        }
+
+        /* Study Tracker Section */
+        .study-tracker {
+            padding: 4rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .tracker-container {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .tracker-stats {
+            flex: 1;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+
+        .stat-card {
+            background-color: var(--light);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            box-shadow: var(--box-shadow);
+        }
+
+        .stat-card h3 {
+            font-size: 1rem;
+            color: var(--text-light);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .stat-progress {
+            height: 6px;
+            background-color: #eee;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background-color: var(--primary);
+            border-radius: 3px;
+        }
+
+        .stat-icon {
+            font-size: 1.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .tracker-graph {
+            flex: 2;
+            background-color: var(--light);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            box-shadow: var(--box-shadow);
+        }
+
+        .tracker-graph h3 {
+            margin-bottom: 1rem;
+        }
+
+        .graph-placeholder {
+            height: 250px;
+            background-color: #f9f9f9;
+            border-radius: var(--border-radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-light);
+        }
+
+        /* Timer Styles */
+        .timer-container {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .timer-display {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 1rem 0;
+            font-family: monospace;
+        }
+
+        .timer-controls {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .subject-select {
+            width: 100%;
+            padding: 0.8rem;
+            border-radius: var(--border-radius);
+            border: 1px solid #ddd;
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+
+        /* Notes Sharing Section */
+        .notes-sharing {
+            padding: 4rem 5%;
+            background-color: var(--light);
+        }
+
+        .notes-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            max-width: 1400px;
+            margin: 0 auto 2rem;
+            padding: 0 5%;
+        }
+
+        .notes-filter select {
+            padding: 0.5rem 1rem;
+            border-radius: var(--border-radius);
+            border: 1px solid #ddd;
+        }
+
+        .notes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 5%;
+        }
+
+        .note-card {
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            transition: transform 0.3s ease;
+            background-color: var(--light);
+            position: relative;
+        }
+
+        .note-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .note-link {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .note-image {
+            position: relative;
+        }
+
+        .note-image img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .note-actions {
+            position: relative;
+            z-index: 2;
+        }
+
+        .save-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: #333;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            z-index: 3;
+        }
+
+        .save-btn:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .note-info {
+            padding: 1rem;
+        }
+
+        .note-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .note-header h3 {
+            font-size: 1.1rem;
+        }
+
+        .note-price {
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .note-description {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .note-author {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .author-avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .author-name {
+            font-size: 0.8rem;
+            color: var(--text-light);
+        }
+
+        .note-stats {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            color: var(--text-light);
+        }
+
+        .note-stats i {
+            margin-right: 0.3rem;
+        }
+
+        /* Subscription Section */
+        .subscription {
+            padding: 4rem 5%;
+            background-color: var(--gray);
+        }
+
+        .pricing-plans {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .plan-card {
+            flex: 1;
+            background-color: var(--light);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            box-shadow: var(--box-shadow);
+            position: relative;
+            max-width: 350px;
+        }
+
+        .plan-card.featured {
+            border: 2px solid var(--primary);
+        }
+
+        .popular-badge {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background-color: var(--primary);
+            color: white;
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .plan-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .plan-price {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+
+        .plan-price span {
+            font-size: 1rem;
+            font-weight: normal;
+            color: var(--text-light);
+        }
+
+        .plan-features {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .plan-features li {
+            margin-bottom: 0.8rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .plan-features li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: var(--light);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            width: 90%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-header h3 {
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-light);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border-radius: var(--border-radius);
+            border: 1px solid #ddd;
+            font-size: 1rem;
+        }
+
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .preview-image {
+            max-width: 100%;
+            max-height: 200px;
+            margin-top: 1rem;
+            display: none;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: var(--light);
+            padding-top: 4rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 5% 3rem;
+        }
+
+        .footer-section {
+            max-width: 300px;
+        }
+
+        .footer-section .logo {
+            color: var(--light);
+            margin-bottom: 1rem;
+        }
+
+        .footer-section p {
+            color: #bbb;
+            margin-bottom: 1.5rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-links a {
+            color: white;
+            font-size: 1.2rem;
+            transition: color 0.3s;
+        }
+
+        .social-links a:hover {
+            color: var(--primary);
+        }
+
+        .footer-links h4 {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            color: var(--light);
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: #bbb;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--light);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #bbb;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .hero {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .hero-content p {
+                margin-left: auto;
+                margin-right: auto;
+            }
+            
+            .hero-buttons {
+                justify-content: center;
+            }
+            
+            .tracker-container {
+                flex-direction: column;
+            }
+            
+            .pricing-plans {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .plan-card {
+                max-width: 100%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 1rem;
+            }
+            
+            .nav-links {
+                gap: 1rem;
+            }
+            
+            .tutor-filters {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .budget-range {
+                width: 100%;
+            }
+            
+            .notes-actions {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: flex-start;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+            }
+            
+            .tutor-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .timer-controls {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <span class="logo-icon">💡</span>
+                <span>Thinklet</span>
+            </div>
+            <div class="nav-links">
+                <a href=https://vanessgio.github.io/thinkletutor/>Tutor Match</a>
+                <a href="#study-tracker">Study Tracker</a>
+                <a href=https://vanessgio.github.io/thinkletnoteshare/>Notes Sharing</a>
+                <a href="#subscription">Premium</a>
+            </div>
+            <div class="auth-buttons">
+                <button class="btn btn-outline">Login</button>
+                <button class="btn btn-primary">Sign Up</button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Your Smart Learning Companion</h1>
+            <p>Find tutors, track progress, and access premium notes in one powerful platform</p>
+            <div class="hero-buttons">
+                <button class="btn btn-primary" id="getStartedBtn">Get Started</button>
+                <button class="btn btn-outline">How It Works</button>
+            </div>
+        </div>
+        <div class="hero-image">
+            <img src="https://media.istockphoto.com/id/507009337/photo/students-helping-each-other.jpg?s=612x612&w=0&k=20&c=993wW_Qvl_LW27TaeXJy2KHYd5tUix3n1dFZXPSkEBU=" alt="Students learning">
+        </div>
+    </section>
+
+    <!-- Tutor Match Section -->
+    <section class="tutor-match" id="tutor-match">
+        <div class="section-header">
+            <h2>Find Your Perfect Tutor</h2>
+            <p>Browse and connect with expert tutors in any subject</p>
+        </div>
+        <div class="tutor-filters">
+            <div class="filter">
+                <label>Subject</label>
+                <select id="subjectFilter">
+                    <option value="all">All Subjects</option>
+                    <option value="Mathematics">Mathematics</option>
+                    <option value="Science">Science</option>
+                    <option value="Music">Music</option>
+                    <option value="Violin" selected>Violin</option>
+                </select>
+            </div>
+            <div class="filter">
+                <label>Budget</label>
+                <div class="budget-range">
+                    <span>$10</span>
+                    <input type="range" id="budgetFilter" min="10" max="100" value="50">
+                    <span>$100</span>
+                </div>
+            </div>
+        </div>
+        <div class="tutor-grid" id="tutorGrid">
+            <!-- Tutors will be loaded here by JavaScript -->
+        </div>
+    </section>
+
+    <!-- Study Tracker Section -->
+    <section class="study-tracker" id="study-tracker">
+        <div class="section-header">
+            <h2>Track Your Learning Progress</h2>
+            <p>Monitor your study habits and achieve your goals</p>
+        </div>
+        <div class="tracker-container">
+            <div class="tracker-stats">
+                <div class="stat-card">
+                    <h3>Today</h3>
+                    <div class="stat-value" id="todayTime">0h 0m</div>
+                    <div class="stat-progress">
+                        <div class="progress-bar" id="todayProgress" style="width: 0%"></div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <h3>This Week</h3>
+                    <div class="stat-value" id="weekTime">0h 0m</div>
+                    <div class="stat-progress">
+                        <div class="progress-bar" id="weekProgress" style="width: 0%"></div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <h3>Current Streak</h3>
+                    <div class="stat-value" id="streak">0 days</div>
+                    <div class="stat-icon">🔥</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Goal Completion</h3>
+                    <div class="stat-value" id="goalCompletion">0%</div>
+                    <div class="stat-progress">
+                        <div class="progress-bar" id="goalProgress" style="width: 0%"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="tracker-graph">
+                <h3>Weekly Study Hours</h3>
+                <div class="graph-placeholder" id="studyGraph">Study Time Graph Will Appear Here</div>
+            </div>
+        </div>
+        
+        <!-- Timer Section -->
+        <div class="timer-container">
+            <h3>Study Timer</h3>
+            <div class="timer-display" id="timerDisplay">00:00:00</div>
+            <div class="timer-controls">
+                <button class="btn btn-primary" id="startTimer">Start</button>
+                <button class="btn btn-outline" id="pauseTimer" disabled>Pause</button>
+                <button class="btn btn-outline" id="resetTimer">Reset</button>
+            </div>
+            <select class="subject-select" id="studySubject">
+                <option value="">Select subject...</option>
+                <option value="Mathematics">Mathematics</option>
+                <option value="Physics">Physics</option>
+                <option value="Chemistry">Chemistry</option>
+                <option value="Biology">Biology</option>
+                <option value="Violin Practice">Violin Practice</option>
+                <option value="Other">Other</option>
+            </select>
+        </div>
+    </section>
+
+    <!-- Notes Sharing Section (Pinterest Style) -->
+    <section class="notes-sharing" id="notes-sharing">
+        <div class="section-header">
+            <h2>Discover & Share Notes</h2>
+            <p>Browse thousands of study notes from top students</p>
+        </div>
+      
+
+        <div class="notes-actions">
+            <button class="btn btn-primary" id="upload-note-btn">
+                <i class="fas fa-plus"></i> Upload Notes
+            </button>
+            <input type="file" id="note-upload" accept="image/*" style="display: none;">
+            
+            <div class="notes-filter">
+                <select id="notesFilter">
+                    <option value="all">All Subjects</option>
+                    <option value="Mathematics">Mathematics</option>
+                    <option value="Science">Science</option>
+                    <option value="Music">Music</option>
+                    <option value="Languages">Languages</option>
+                </select>
+            </div>
+        </div>
+        
+        <div class="notes-grid" id="notesGrid">
+            <!-- Notes will be loaded here by JavaScript -->
+        </div>
+    </section>
+
+    <!-- Subscription Section -->
+    <section class="subscription" id="subscription">
+        <div class="section-header">
+            <h2>Unlock Premium Features</h2>
+            <p>Get unlimited access to premium notes and features</p>
+        </div>
+        <div class="pricing-plans">
+            <div class="plan-card">
+                <h3>Basic</h3>
+                <div class="plan-price">Free</div>
+                <ul class="plan-features">
+                    <li>Limited note access</li>
+                    <li>Basic tutor matching</li>
+                    <li>Ad-supported</li>
+                </ul>
+                <button class="btn btn-outline" id="basicPlanBtn">Current Plan</button>
+            </div>
+            <div class="plan-card featured">
+                <div class="popular-badge">Most Popular</div>
+                <h3>Premium</h3>
+                <div class="plan-price">$9.99<span>/month</span></div>
+                <ul class="plan-features">
+                    <li>Unlimited premium notes</li>
+                    <li>Advanced tutor matching</li>
+                    <li>Ad-free experience</li>
+                    <li>Study analytics</li>
+                </ul>
+                <button class="btn btn-primary" id="premiumPlanBtn">Upgrade Now</button>
+            </div>
+            <div class="plan-card">
+                <h3>Creator</h3>
+                <div class="plan-price">$14.99<span>/month</span></div>
+                <ul class="plan-features">
+                    <li>All Premium features</li>
+                    <li>Sell your own notes</li>
+                    <li>Advanced analytics</li>
+                    <li>Creator tools</li>
+                </ul>
+                <button class="btn btn-outline" id="creatorPlanBtn">For Tutors</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <div class="logo">
+                    <span class="logo-icon">💡</span>
+                    <span>Thinklet</span>
+                </div>
+                <p>Revolutionizing education through technology and community.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            <div class="footer-links">
+                <h4>Company</h4>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Blog</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>Support</h4>
+                <ul>
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">Safety</a></li>
+                    <li><a href="#">Community</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>Legal</h4>
+                <ul>
+                    <li><a href="#">Terms</a></li>
+                    <li><a href="#">Privacy</a></li>
+                    <li><a href="#">Cookies</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2023 Thinklet. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Upload Note Modal -->
+    <div class="modal" id="uploadModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Upload New Note</h3>
+                <button class="close-modal" id="closeModal">&times;</button>
+            </div>
+            <form id="noteForm">
+                <div class="form-group">
+                    <label for="noteTitle">Title</label>
+                    <input type="text" id="noteTitle" required>
+                </div>
+                <div class="form-group">
+                    <label for="noteSubject">Subject</label>
+                    <select id="noteSubject" required>
+                        <option value="">Select subject</option>
+                        <option value="Mathematics">Mathematics</option>
+                        <option value="Science">Science</option>
+                        <option value="Music">Music</option>
+                        <option value="Languages">Languages</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="noteDescription">Description</label>
+                    <textarea id="noteDescription" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="notePrice">Price</label>
+                    <input type="number" id="notePrice" min="0" step="0.01" value="0">
+                </div>
+                <div class="form-group">
+                    <label for="noteImage">Upload Image</label>
+                    <input type="file" id="noteImage" accept="image/*" required>
+                    <img id="imagePreview" class="preview-image" alt="Preview">
+                </div>
+                <button type="submit" class="btn btn-primary">Upload Note</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Tutor Data
+        const tutors = [
+            {
+                id: 1,
+                name: "Julia Smith",
+                subject: "Violin",
+                rating: 5,
+                reviews: 24,
+                bio: "Professional violinist with 10+ years teaching experience",
+                price: 45,
+                image: "https://source.unsplash.com/random/300x300/?violin,teacher"
+            },
+            {
+                id: 2,
+                name: "Michael Chen",
+                subject: "Mathematics",
+                rating: 4,
+                reviews: 18,
+                bio: "Math PhD with 8 years of tutoring experience",
+                price: 60,
+                image: "https://source.unsplash.com/random/300x300/?math,teacher"
+            },
+            {
+                id: 3,
+                name: "David Wilson",
+                subject: "Chemistry",
+                rating: 5,
+                reviews: 32,
+                bio: "Chemistry professor specializing in organic chemistry",
+                price: 55,
+                image: "https://source.unsplash.com/random/300x300/?chemistry,teacher"
+            },
+            {
+                id: 4,
+                name: "Sarah Johnson",
+                subject: "Physics",
+                rating: 4,
+                reviews: 15,
+                bio: "Physics tutor with 5 years of experience",
+                price: 50,
+                image: "https://source.unsplash.com/random/300x300/?physics,teacher"
+            },
+            {
+                id: 5,
+                name: "Emma Davis",
+                subject: "Biology",
+                rating: 5,
+                reviews: 27,
+                bio: "Biology teacher specializing in genetics",
+                price: 48,
+                image: "https://source.unsplash.com/random/300x300/?biology,teacher"
+            },
+            {
+                id: 6,
+                name: "James Brown",
+                subject: "Violin",
+                rating: 4,
+                reviews: 12,
+                bio: "Classical violinist with orchestra experience",
+                price: 40,
+                image: "https://source.unsplash.com/random/300x300/?violinist"
+            }
+        ];
+
+        // Notes Data
+        let notes = [
+            {
+                id: 1,
+                title: "Advanced Calculus",
+                subject: "Mathematics",
+                price: 4.99,
+                description: "Complete calculus notes with practice problems and solutions",
+                author: "Michael Chen",
+                rating: 4.8,
+                reviews: 120,
+                downloads: 542,
+                image: "https://source.unsplash.com/random/300x450/?notes,math",
+                link: "https://www.studocu.com"
+            },
+            {
+                id: 2,
+                title: "Organic Chemistry",
+                subject: "Science",
+                price: 6.99,
+                description: "Reaction mechanisms and diagrams with examples",
+                author: "Sarah Johnson",
+                rating: 4.7,
+                reviews: 89,
+                downloads: 328,
+                image: "https://source.unsplash.com/random/300x450/?notes,chemistry",
+                link: "https://www.coursehero.com"
+            },
+            {
+                id: 3,
+                title: "Quantum Physics",
+                subject: "Science",
+                price: 0,
+                description: "Simplified explanations of complex quantum concepts",
+                author: "David Kim",
+                rating: 4.9,
+                reviews: 156,
+                downloads: 782,
+                image: "https://source.unsplash.com/random/300x450/?notes,physics",
+                link: "https://www.scribd.com"
+            },
+            {
+                id: 4,
+                title: "Cell Biology",
+                subject: "Science",
+                price: 3.99,
+                description: "Detailed cellular structures and processes with diagrams",
+                author: "Emma Wilson",
+                rating: 4.5,
+                reviews: 76,
+                downloads: 421,
+                image: "https://source.unsplash.com/random/300x500/?notes,biology",
